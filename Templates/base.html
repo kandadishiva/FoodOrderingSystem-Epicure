@@ -1,0 +1,856 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>
+    {% block title %}{% endblock title %}
+  </title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static '/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static '/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static '/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static '/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static '/assets/css/main.css' %}" rel="stylesheet">
+
+  
+
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Font Awesome JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" defer></script>
+
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <a class="logo d-flex align-items-center me-auto me-lg-0"
+      {% if request.user.is_authenticated %}
+        href="/home"
+      {% else %}
+        href="/"
+      {% endif %}
+      >
+        <h1>Epicure<span></span></h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#Restaurants">Restaurants</a></li>
+          <li><a href="#menu">Menu</a></li>
+          {% if request.user.is_authenticated %}
+            {% if status == "Approved" %}
+              <li><a href="{% url 'RestaturantFoodItems' %}">Food Items</a></li>
+              <li><a href="{% url 'CustomerOrders' %}">Orders</a></li>
+            {% else %}
+            <li><a href="{% url 'MyOrders' %}">Orders</a></li>
+            {% endif %}
+          {% else %}
+            <li><a href="#gallery">Gallery</a></li>
+          {% endif %}
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav><!-- .navbar -->
+
+        {% if request.user.is_authenticated %}
+        <!--<a class="btn-book-a-table" href="/validate/logout/">Logout</a>-->
+        
+        
+        <div class="dropdown" style="display:flex; gap :20px;">
+          <button type="button" class="btn-book-a-table" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" style="border: none;"><i class="fa-solid fa-cart-shopping fa-fade"></i> Cart (<span id="cart">0</span>)</button>
+
+          <a href="#" class="logo d-flex align-items-center me-auto me-lg-0" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+            
+            <img src="{% static 'images/avatar.png' %}" alt="">
+            
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#"><img src="{% static 'images/login.png' %}" alt="" height=25 width=25>  Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'MyOrders' %}"><img src="{% static 'images/orders.png' %}" alt="" height=25 width=25>  My Orders</a></li>
+            <li><a class="dropdown-item" href="/newrestaurant"><img src="{% static 'images/list.png' %}" alt="" height=25 width=25>  Start a Restaurant</a></li>
+            <li><a class="dropdown-item" href="#"><img src="{% static 'images/setting.png' %}" alt="" height=25 width=25>  Settings</a></li>
+            <li><a class="dropdown-item" href="/validate/logout/"><img src="{% static 'images/log.png' %}" alt="" height=25 width=25>  Logout</a></li>
+          </ul>
+        </div>  
+        
+        {% else %}
+        
+        <a class="btn-book-a-table" href="/validate/login/">Login/Signup</a>
+        {% endif %}
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center section-bg">
+    <div class="container">
+      {% block content %}{% endblock content %}
+    </div>
+  </section><!-- End Hero Section -->
+
+  <main id="main">
+    {% block WhyEpicure%}
+    {% endblock WhyEpicure%}
+
+
+    <!-- ======= Stats Counter Section ======= -->
+    <section id="stats-counter" class="stats-counter">
+      <div class="container" data-aos="zoom-out">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end={{Count.RestaturantCount}} data-purecounter-duration="1" class="purecounter"></span>
+              <p>Restaurants</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end={{Count.ItemsCount}} data-purecounter-duration="1" class="purecounter"></span>
+              <p>Food Items</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end={{Count.ordercount}} data-purecounter-duration="1" class="purecounter"></span>
+              <p>Orders</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end={{Count.DeliveredCount}} data-purecounter-duration="1" class="purecounter"></span>
+              <p>Delivered</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+      </div>
+    </section><!-- End Stats Counter Section -->
+
+    <!-- ======= Restaurants Section ======= -->
+    <section id="Restaurants" class="menu">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <p>Check Our <span>Restaurants/Canteens</span></p>
+        </div>
+
+        <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
+
+          <li class="nav-item">
+            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-Restaurants">
+              <h4>Restaurants</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-Canteens">
+              <h4>Canteens</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-FastFood">
+              <h4>Fast Food</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+        </ul>
+
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
+
+          <div class="tab-pane fade active show" id="menu-Restaurants">
+
+            <div class="tab-header text-center">
+              <h3>Restaurants</h3>
+            </div>
+
+            <div class="row gy-5">
+              {% for Restaurant in Restaturants%}
+
+              <div class="col-lg-4 menu-item">
+                <a href="{% url 'FoodItems' Restaurant.RestaturantId %}">
+                <div class="card">
+                <img src='{% static Restaurant.Image %}'  alt="" style="border-radius: 10%; height:250px; width:280px;" >
+                <h4 id="namepr{{Restaurant.RestaturantId}}" style="color:black"><b>{{Restaurant.RestaturantName}}</b></h4>
+                <h6 id="pricepr{{Restaurant.RestaturantId}}" style="color:#3b3939">
+                  Address : {{Restaurant.address}}
+                </h6>
+                </div>
+                </a>
+                
+              </div>
+
+              {% endfor%}
+
+            </div>
+          </div><!-- End Starter Menu Content -->
+
+          <div class="tab-pane fade" id="menu-Canteens">
+
+            <div class="tab-header text-center">
+              <h3>Canteens</h3>
+            </div>
+
+            <div class="row gy-5">
+
+              {% for Canteen in Canteens%}
+
+              <div class="col-lg-4 menu-item">
+                <a href="#">
+                <div class="card">
+                <img src='{% static Canteen.Image %}'  alt="" style="border-radius: 10%; height:250px; width:280px;" >
+                <h4 id="namepr{{Canteen.RestaturantId}}" style="color:black"><b>{{Canteen.RestaturantName}}</b></h4>
+                <h6 id="pricepr{{Canteen.RestaturantId}}" style="color:#3b3939">
+                  Address : {{Canteen.address}}
+                </h6>
+                </div>
+                </a>
+                
+              </div>
+
+              {% endfor%}
+
+            </div>
+          </div><!-- End Starter Menu Content -->
+
+          <div class="tab-pane fade" id="menu-FastFood">
+
+            <div class="tab-header text-center">
+              <h3>Fast Food Centers</h3>
+            </div>
+
+            <div class="row gy-5">
+
+              {% for FastFood in FastFood%}
+
+              <div class="col-lg-4 menu-item">
+                <a href="#">
+                <div class="card">
+                <img src='{% static FastFood.Image %}'  alt="" style="border-radius: 10%; height:250px; width:280px;" >
+                <h4 id="namepr{{FastFood.RestaturantId}}" style="color:black"><b>{{FastFood.RestaturantName}}</b></h4>
+                <h6 id="pricepr{{FastFood.RestaturantId}}" style="color:#3b3939">
+                  Address : {{FastFood.address}}
+                </h6>
+                </div>
+                </a>
+                
+              </div>
+
+              {% endfor%}
+
+            </div>
+          </div><!-- End Breakfast Menu Content -->
+
+
+        </div>
+
+      </div>
+    </section><!-- End Restaurants Section -->
+
+    <!-- ======= Menu Section ======= -->
+    <section id="menu" class="menu">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Menu</h2>
+          <p>Check Our <span>Epicure Menu</span></p>
+        </div>
+
+        <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
+
+          <li class="nav-item">
+            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-All">
+              <h4>All</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-starters">
+              <h4>Snacks</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
+              <h4>Breakfast</h4>
+            </a><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
+              <h4>Lunch</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
+              <h4>Dinner</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+        </ul>
+
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
+
+          <div class="tab-pane fade active show" id="menu-All">
+
+            <div class="tab-header text-center">
+              <p>Menu</p>
+              <h3>All</h3>
+            </div>
+
+            <div class="row gy-5">
+              {% for item in AllItems%}
+
+              <div class="col-lg-4 menu-item">
+                <div class="card">
+                <a href="#"><img src='{% static item.Image %}'  alt="" style="border-radius: 10%; height:200px; width:280px;" ></a>
+                <h4 id="namepr{{item.ItemId}}">{{item.ItemName}}</h4>
+                <p class="price" id="pricepr{{item.ItemId}}">
+                  Rs:{{item.Price}}
+                </p>
+                <span id="divpr{{item.ItemId}}" class="divpr">
+                <button id="pr{{item.ItemId}}" class="btn btn-danger cart btn-sm mt-0" style="background-color: #ce1212; color: white; border-radius: 10px;border:none;padding : 10px; width:150px">
+                AddToCart <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+                </span>
+                </div>
+                
+              </div>
+
+              {% endfor%}
+
+            </div>
+          </div><!-- End Starter Menu Content -->
+
+          <div class="tab-pane fade" id="menu-starters">
+
+            <div class="tab-header text-center">
+              <p>Menu</p>
+              <h3>Snacks</h3>
+            </div>
+
+            <div class="row gy-5">
+              {% for item in SnacksItems%}
+
+              <div class="col-lg-4 menu-item">
+                <div class="card">
+                <a href="#"><img src='{% static item.Image %}'  alt="" style="border-radius: 10%; height:200px; width:280px;" ></a>
+                <h4 id="namepr{{item.ItemId}}">{{item.ItemName}}</h4>
+                <p class="price" id="pricepr{{item.ItemId}}">
+                  Rs:{{item.Price}}
+                </p>
+                <span id="divpr{{item.ItemId}}" class="divpr">
+                <button id="pr{{item.ItemId}}" class="btn btn-danger cart btn-sm mt-0" style="background-color: #ce1212; color: white; border-radius: 10px;border:none;padding : 10px; width:150px">
+                AddToCart<i class="fa-solid fa-cart-shopping"></i>
+                </button>
+                </span>
+                </div>
+                
+              </div>
+
+              {% endfor%}
+              
+
+            </div>
+          </div><!-- End Starter Menu Content -->
+
+          <div class="tab-pane fade" id="menu-breakfast">
+
+            <div class="tab-header text-center">
+              <p>Menu</p>
+              <h3>Breakfast</h3>
+            </div>
+
+            <div class="row gy-5">
+
+              {% for item in BreakfastItems%}
+
+              <div class="col-lg-4 menu-item">
+                <div class="card">
+                <a href="#"><img src='{% static item.Image %}'  alt="" style="border-radius: 10%; height:200px; width:280px;" ></a>
+                <h4 id="namepr{{item.ItemId}}">{{item.ItemName}}</h4>
+                <p class="price" id="pricepr{{item.ItemId}}">
+                  Rs:{{item.Price}}
+                </p>
+                <span id="divpr{{item.ItemId}}" class="divpr">
+                <button id="pr{{item.ItemId}}" class="btn btn-danger cart btn-sm mt-0" style="background-color: #ce1212; color: white; border-radius: 10px;border:none;padding : 10px; width:150px">
+                AddToCart<i class="fa-solid fa-cart-shopping"></i>
+                </button>
+                </span>
+                </div>
+                
+              </div>
+
+              {% endfor%}
+
+            </div>
+          </div><!-- End Breakfast Menu Content -->
+
+          <div class="tab-pane fade" id="menu-lunch">
+
+            <div class="tab-header text-center">
+              <p>Menu</p>
+              <h3>Lunch</h3>
+            </div>
+
+            <div class="row gy-5">
+
+              {% for item in LunchItems%}
+
+              <div class="col-lg-4 menu-item">
+                <div class="card">
+                <a href="#"><img src='{% static item.Image %}'  alt="" style="border-radius: 10%; height:200px; width:280px;" ></a>
+                <h4 id="namepr{{item.ItemId}}">{{item.ItemName}}</h4>
+                <p class="price" id="pricepr{{item.ItemId}}">
+                  Rs:{{item.Price}}
+                </p>
+                <span id="divpr{{item.ItemId}}" class="divpr">
+                <button id="pr{{item.ItemId}}" class="btn btn-danger cart btn-sm mt-0" style="background-color: #ce1212; color: white; border-radius: 10px;border:none;padding : 10px; width:150px">
+                AddToCart<i class="fa-solid fa-cart-shopping"></i>
+                </button>
+                </span>
+                </div>
+                
+              </div>
+
+              {% endfor%}
+
+            </div>
+          </div><!-- End Lunch Menu Content -->
+
+          <div class="tab-pane fade" id="menu-dinner">
+
+            <div class="tab-header text-center">
+              <p>Menu</p>
+              <h3>Dinner</h3>
+            </div>
+
+            <div class="row gy-5">
+              {% for item in DinnerItems%}
+
+              <div class="col-lg-4 menu-item">
+                <div class="card">
+                <a href="#"><img src='{% static item.Image %}'  alt="" style="border-radius: 10%; height:200px; width:280px;" ></a>
+                <h4>{{item.ItemName}}</h4>
+                <p class="price">
+                  Rs:{{item.Price}}
+                </p>
+                <button style="background-color: #ce1212; color: white; border-radius: 10px;border:none;padding : 10px; width:150px">
+                  <a href="#" style="color: white;">AddToCart</a>
+                </button>
+                </div>
+                
+              </div>
+
+              {% endfor%}
+
+            </div>
+          </div><!-- End Dinner Menu Content -->
+
+        </div>
+
+      </div>
+    </section><!-- End Menu Section -->
+
+
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>gallery</h2>
+          <p>Check <span>Our Gallery</span></p>
+        </div>
+
+        <div class="gallery-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-1.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-1.jpg' %}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-2.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-2.jpg' %}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-3.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-3.jpg' %}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-4.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-4.jpg' %}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-5.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-5.jpg' %}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-6.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-6.jpg' %}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-7.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-7.jpg' %}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{% static '/assets/img/gallery/gallery-8.jpg' %}"><img src="{% static '/assets/img/gallery/gallery-8.jpg' %}" class="img-fluid" alt=""></a></div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Gallery Section -->
+
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>About Us</h2>
+          <p>Learn More <span>About Us</span></p>
+        </div>
+
+        <div class="row gy-4">
+          <div class="col-lg-7 position-relative about-img" style="background-image: url({% static '/assets/img/about.jpg' %}) ;" data-aos="fade-up" data-aos-delay="150">
+            <div class="call-us position-absolute">
+              <h4>Developed by K Shiva Prasad Reddy</h4>
+              <p>kandadishiva8109@gmail.com</p>
+            </div>
+          </div>
+          <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">
+            <div class="content ps-0 ps-lg-5">
+              <p class="fst-italic">
+                Welcome to Epicure, the ultimate food ordering platform designed to revolutionize your dining experience. With Epicure, you can pre-order your favorite meals from a wide selection of restaurants, ensuring your food is ready upon your arrival and eliminating any waiting time. We are committed to providing a seamless and convenient solution, allowing you to savor every bite without wasting a moment. Our user-friendly interface and secure payment system make ordering a breeze, while our dedicated team ensures your orders are accurate and delivered with utmost efficiency. Join us at Epicure and indulge in a world of culinary delights, where satisfying your cravings is just a few clicks away.
+              </p>
+
+              <div class="position-relative mt-4">
+                <img src="{% static '/images/Shiva 200.jpg' %}" class="img-fluid" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Contact</h2>
+          <p>Need Help? <span>Contact Us</span></p>
+        </div>
+
+        <div class="mb-3">
+          <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3808.9147452434554!2d78.61299184061008!3d17.31966211365528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcba15d10db7815%3A0x8aea74cd4382be18!2sMidhani%20Colony%20Park!5e0!3m2!1sen!2sin!4v1684153154455!5m2!1sen!2sin" frameborder="0" allowfullscreen></iframe>
+                        </div><!-- End Google Maps -->
+
+        <div class="row gy-4">
+
+          <div class="col-md-6">
+            <div class="info-item  d-flex align-items-center">
+              <i class="icon bi bi-map flex-shrink-0"></i>
+              <div>
+                <h3>Our Address</h3>
+                <p>Hyderabad, Telangana, India</p>
+              </div>
+            </div>
+          </div><!-- End Info Item -->
+
+          <div class="col-md-6">
+            <div class="info-item d-flex align-items-center">
+              <i class="icon bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h3>Email Us</h3>
+                <p>kandadishiva8109@gmail.com</p>
+              </div>
+            </div>
+          </div><!-- End Info Item -->
+
+          <div class="col-md-6">
+            <div class="info-item  d-flex align-items-center">
+              <i class="icon bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Call Us</h3>
+                <p>+919848639990</p>
+              </div>
+            </div>
+          </div><!-- End Info Item -->
+
+          <div class="col-md-6">
+            <div class="info-item  d-flex align-items-center">
+              <i class="icon bi bi-share flex-shrink-0"></i>
+              <div>
+                <h3>Opening Hours</h3>
+                <div><strong>Mon-Sat:</strong> 8AM - 8PM;
+                  <strong>Sunday:</strong> Closed
+                </div>
+              </div>
+            </div>
+          </div><!-- End Info Item -->
+
+        </div>
+
+        <form action="/contact" method="post" role="form" class="php-email-form p-3 p-md-4">{% csrf_token %}
+          <div class="row">
+            <div class="col-xl-6 form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="col-xl-6 form-group">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required
+              {% if request.user.is_authenticated %}
+              value="{{ request.user.email }}"
+              {% endif %}
+              
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+          </div>
+          <div class="my-3">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your message has been sent. Thank you!</div>
+          </div>
+          <div class="text-center"><button type="submit">Send Message</button></div>
+        </form><!--End Contact Form -->
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+
+    <div class="container">
+      <div class="row gy-3">
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="bi bi-geo-alt icon"></i>
+          <div>
+            <h4>Address</h4>
+            <p>
+              Hyderabad <br>
+              Telangana-501505 India<br>
+            </p>
+          </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links d-flex">
+          <i class="bi bi-telephone icon"></i>
+          <div>
+            <h4>Contact</h4>
+            <p>
+              <strong>Phone:</strong> +191 984 863 9990<br>
+              <strong>Email:</strong> kandadishiva8109@gmail.com<br>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links d-flex">
+          <i class="bi bi-clock icon"></i>
+          <div>
+            <h4>Opening Hours</h4>
+            <p>
+              <strong>Mon-Sat: 8AM</strong> - 8PM<br>
+              Sunday: Closed
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Follow Us</h4>
+          <div class="social-links d-flex">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Epicure</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        
+        Designed by <a href="#">K Shiva Prasad Reddy</a>
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+  <!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static '/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static '/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static '/assets/js/main.js' %}"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
+  <script>
+  
+    //find pout the card from local storage
+  
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        updateCart(cart);
+  
+    }
+    // add or increment code
+  
+    // $('.cart').click(function() {
+    $('.divpr').on('click', 'button.cart', function() {
+        var idstr = this.id.toString();
+        console.log(idstr)
+  
+        if (cart[idstr] != undefined) {
+            qty = cart[idstr][0] + 1;
+  
+        } else {
+            qty = 1;
+            console.log('we are  inside else');
+            console.log('name'+idstr);
+            name = document.getElementById('name' + idstr).innerHTML;
+            
+            price = document.getElementById('price' + idstr).innerHTML;
+            cart[idstr] = [qty, name, price];
+            
+        }
+        updateCart(cart);
+  
+        localStorage.setItem('cart', JSON.stringify(cart));
+        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+        console.log( Object.keys(cart).length)
+        document.getElementById("popcart").click();
+    });
+    // add pop over to cart
+  
+    $('#popcart').popover();
+  
+    updatePopover(cart);
+    function updatePopover(cart) {
+  
+        
+        console.log('we are  inside update popover');
+        
+        var popStr = "";
+        var popStr = popStr + "<h5> Cart Items </h5> <div class='mx-2 my-2'>";
+        var i = 1;
+        var total=0;
+        for (var item in cart) {
+            var price1 =cart[item][2].split(":")[1]
+            var price2=parseFloat(price1)
+            var price3=price2*parseFloat(cart[item][0])
+            total=total+price3
+            popStr = popStr + "<b>" + i + "</b>. ";
+            popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "..." + "<b>" +cart[item][0] + "</b>"+ "Qty"  +"..."+"<b>"+"Rs:"+price3+"</b>"+ '<br>';
+            i = i + 1;
+        }
+        popStr=popStr+"<b>"+"Total Price: "+total+"</b>"+'<br>';
+        popStr = popStr + "</div> <span id='clearCartButton' class='btn btn-danger mx-2'>Clear Cart</span> <a href='/BillingPage' class='btn btn-primary mx-2'>Pay</a>";
+        
+        document.getElementById('popcart').setAttribute('data-content', popStr);
+        if (Object.keys(cart).length > 0) {
+          $('#popcart').popover('show');
+          document.getElementById("popcart").click();
+        }
+        document.addEventListener('click', function(event) {
+          if (event.target && event.target.id === 'clearCartButton') {
+            clearCart();
+          }
+        });
+    }
+    
+  
+    function clearCart() {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        for (var item in cart) {
+          document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-danger cart btn-sm mt-0" style="background-color: #ce1212; color: white; border-radius: 10px;border:none;padding : 10px; width:150px">AddToCart <i class="fa-solid fa-cart-shopping"></i></button>'
+        }
+        localStorage.clear();
+        cart = {};
+        updateCart(cart);
+        
+       let clear= document.getElementById("popcart").click();
+       document.getElementById("popcart").click();
+      
+    }
+  
+    function updateCart(cart) {
+        var sum = 0;
+        for (var item in cart) {
+            sum = sum + cart[item][0];
+            document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "'class='btn btn-success minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-success plus'> + </button>";
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        document.getElementById('cart').innerHTML = sum;
+        console.log(cart);
+        updatePopover(cart);
+        document.getElementById("popcart").click();
+    }
+  
+    //if plus or minus button is clicked change the cart as well as the display value
+    $('.divpr').on("click", "button.minus", function() {
+  
+        a = this.id.slice(7, );
+        cart['pr' + a][0] = cart['pr' + a][0] - 1;
+        cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+        document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+        updateCart(cart);
+        
+  
+    })
+  
+  
+    $('.divpr').on("click", "button.plus", function() {
+  
+        a = this.id.slice(6, );
+        cart['pr' + a][0] = cart['pr' + a][0] + 1;
+  
+        document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+        updateCart(cart);
+        
+  
+    })
+  </script>
+  
+
+</body>
+
+</html>

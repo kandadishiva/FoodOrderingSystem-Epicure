@@ -1,0 +1,103 @@
+{% extends 'base2.html' %}
+{%block title %}Restaurant Registeration{%endblock title%}
+{% block navbar %}
+  <li><a href="#hero">Home</a></li>
+  <li><a href="#Register">Register</a></li>
+  <li><a href="#contact">Contact</a></li>
+{% endblock navbar %}
+{% block hero %}
+<div class="container">
+  <div class="row justify-content-between gy-5">
+    <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+    <h2 data-aos="fade-up">Start a<br>Restaurant?</h2>
+    <p data-aos="fade-up" data-aos-delay="100">Click 'start' to Submit required documents to obtain permissions swiftly and start your culinary venture with ease</p>
+    <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+      <a href="#Register" class="btn-book-a-table">Start</a>
+    </div>
+    </div>
+    <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+    <img src="{% static 'images/restaurant.jpg' %}"  class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+    </div>
+</div>
+</div>
+{% endblock hero %}
+
+{% block formSection %}
+{% for message in messages %}
+
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                  <strong>{{message}}</strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                {% endfor %}
+<section id="Register" class="hero d-flex align-items-center section-bg">
+  <div class="container">
+
+    <div class="row justify-content-between gy-5">
+      <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+      <h2 data-aos="fade-up">Provide the <br>Detailes</h2>
+      <p data-aos="fade-up" data-aos-delay="100">Submit required documents to obtain permission<br>Note: only in pdf format</p>
+      
+      </div>
+      <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+          
+
+              <form style="width: 23rem;" action="/newrestaurant" method="post"  enctype="multipart/form-data" >{% csrf_token %}
+
+                  <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+                      <h2 data-aos="fade-up">Register</h2>
+                  </div>
+                  
+                  <div class="form-outline mb-4">
+                      <input type="text" id="Name" class="form-control form-control-lg"  name="name" required/>
+                      <label class="form-label" for="Name">Restaurant Name</label>
+                    </div>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="email" class="form-control form-control-lg" name="ownername" required/>
+                  <label class="form-label" for="email">Owner Name</label>
+                </div>
+    
+                <div class="form-outline mb-4">
+                  <input type="text" id="ownerno" class="form-control form-control-lg" name="ownerno" required/>
+                  <label class="form-label" for="ownerno">Owner PhNo</label>
+                </div>
+                <div class="form-outline mb-4">
+                  <input type="text" id="address" class="form-control form-control-lg" name="address" required/>
+                  <label class="form-label" for="address">Address</label>
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="Rtype">Restaurant Type</label>
+                  <select id="Rtype" name="Rtype">
+                    <option>Select</option>
+                    <option>Restaurant</option>
+                    <option>Fast Food</option>
+                    <option>Canteen</option>
+                  </select>
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="file1">Provide the Restaurant documents for verification(pdf only)</label>
+                  <input type="file" id="file1"  name="file1"  required/>
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="file2">Provide a Restaurant Photo to place in the Website</label>
+                  <input type="file" id="file2"  name="file2"  required/>
+                </div>
+                <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+                  <button class="btn-book-a-table" type="submit" style="border: none;">Confirm</button>
+                </div>
+    
+              </form>
+    
+            
+      </div>
+    </div>
+    
+  </div>
+</section><!-- End Registeration Section -->
+{% endblock formSection %}

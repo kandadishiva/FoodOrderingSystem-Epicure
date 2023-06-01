@@ -1,0 +1,166 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %}
+Order Items
+{% endblock title %} 
+{% block navbar %}
+  <li><a href="#hero">Orders</a></li>
+  {% if status == "Approved" %}
+  <li><a href="{% url 'MyOrders' %}">Your Orders</a></li>
+  {% endif %}
+  <li><a href="#contact">Contact</a></li>
+{% endblock navbar %}
+
+{% block hero %}
+        <div class="container">
+            <div class="my-4" style="justify-content: center;align-items:center;">
+              {% for message in messages %}
+
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                  <strong>{{message}}</strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                {% endfor %}
+                {% if status == "Approved" %}
+                <center><h2>Welcome to Customer Orders</h2>
+                        <h4><b>Pending Orders</b></h4>
+                    </center>
+                    {% else %}
+                    <center><h2>Welcome to Your Orders</h2>
+                        <h4><b>Pending Orders</b></h4>
+                        {% endif %}
+                    </center>
+                    <center><table class="table table-info table-striped">
+                      <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Order Id</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            <th>Order Type</th>
+                            <th>Order Date</th>
+                            <th>Order Time</th>
+                            <th>Order Amount</th>
+                            <th>Cancellation</th>
+                            <th>View</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orders %}
+                        {% if order.Status != "Cancelled"%}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{order.OrderId}}</td>
+                            <td><span class="badge bg-success">{{order.Status}}</span></td>
+                            <td>{{order.ItemsInfo}}</td>
+                            <td>{{order.OrderType}}</td>
+                            <td>{{order.Date}}</td>
+                            <td>{{order.Time}}</td>
+                            <td>Rs : {{order.TotalCost}}</td>
+
+                            {% if order.Status == "Cancelled"%}
+                            <td><a href="#"><button class="btn btn-danger" disabled>Cancel</button></a></td>
+                            {% else %}
+                            <td><a href="{% url 'CancelOrder' order.OrderId %}"><button class="btn btn-danger">Cancel</button></a></td>
+                            {% endif %}
+
+                            {% if status == "Approved" %}
+                              <td><a href="{% url 'CustomerViewOrder' order.OrderId %}" ><button class="btn btn-success">View</button></a></td>
+                            {% else %}
+                              <td><a href="{% url 'ViewOrder' order.OrderId %}" ><button class="btn btn-success">View</button></a></td>
+                            {% endif %}
+                            
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table></center>
+                    
+                    <center><h4><b>Cancelled Orders</b></h4></center>
+                    <center><table class="table table-info table-striped">
+                      <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Order Id</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            <th>Order Type</th>
+                            <th>Order Date</th>
+                            <th>Order Time</th>
+                            <th>Order Amount</th>
+                            <th>Cancellation</th>
+                            <th>View</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in CancelledOrders %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{order.OrderId}}</td>
+                            <td><span class="badge bg-danger">{{order.Status}}</span></td>
+                            <td>{{order.ItemsInfo}}</td>
+                            <td>{{order.OrderType}}</td>
+                            <td>{{order.Date}}</td>
+                            <td>{{order.Time}}</td>
+                            <td>Rs : {{order.TotalCost}}</td>
+
+                            {% if order.Status == "Cancelled"%}
+                            <td><a href="#"><button class="btn btn-danger" disabled>Cancel</button></a></td>
+                            {% else %}
+                            <td><a href="{% url 'CancelOrder' order.OrderId %}"><button class="btn btn-danger">Cancel</button></a></td>
+                            {% endif %}
+                            <td><a href="{% url 'ViewOrder' order.OrderId %}" ><button class="btn btn-success">View</button></a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table></center>
+                    <center><h4><b>Completed Orders</b></h4></center>
+                    <center><table class="table table-info table-striped">
+                      <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Order Id</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            <th>Order Type</th>
+                            <th>Order Date</th>
+                            <th>Order Time</th>
+                            <th>Order Amount</th>
+                            <th>Cancellation</th>
+                            <th>View</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in CompletedOrders %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{order.OrderId}}</td>
+                            <td><span class="badge bg-danger">{{order.Status}}</span></td>
+                            <td>{{order.ItemsInfo}}</td>
+                            <td>{{order.OrderType}}</td>
+                            <td>{{order.Date}}</td>
+                            <td>{{order.Time}}</td>
+                            <td>Rs : {{order.TotalCost}}</td>
+
+                            {% if order.Status == "Cancelled"%}
+                            <td><a href="#"><button class="btn btn-danger" disabled>Cancel</button></a></td>
+                            {% else %}
+                            <td><a href="{% url 'CancelOrder' order.OrderId %}"><button class="btn btn-danger">Cancel</button></a></td>
+                            {% endif %}
+                            <td><a href="{% url 'ViewOrder' order.OrderId %}" ><button class="btn btn-success">View</button></a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table></center>
+            </div>
+           
+       </div>
+{% endblock hero %}

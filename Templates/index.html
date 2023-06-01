@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title %}Home{%endblock title%}
+{% block content %}
+    <div class="row justify-content-between gy-5">
+        <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+        <h2 data-aos="fade-up">Welcome to <br>Epicure</h2>
+        <p data-aos="fade-up" data-aos-delay="100">"Save time, skip the wait! Pre-order your favorite meals from top restaurants and savor every bite with our hassle-free Epicure."</p>
+        <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+            <a href="/validate/login/" class="btn-book-a-table">Login</a>
+        </div>
+        </div>
+        <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+        <img src="{% static 'assets/img/hero-img.png' %}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+        </div>
+  </div>
+{% endblock content %}
+
+{% block WhyEpicure %}
+    <section id="why-us" class="why-us section-bg">
+        <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="why-box">
+                <h3>Why Choose Epicure?</h3>
+                <p>
+                    Discover the convenience of Epicure for your dining needs. With a wide selection of restaurants, pre-order your meals to save time and avoid waiting. Enjoy personalized experiences, secure transactions, and exceptional customer service. Choose Epicure for a seamless and satisfying dining journey.
+                </p>
+                <div class="text-center">
+                <a href="#about" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
+                </div>
+            </div>
+            </div><!-- End Why Box -->
+
+            <div class="col-lg-8 d-flex align-items-center">
+            <div class="row gy-4">
+
+                <div class="col-xl-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-clock-history"></i>
+                    <h4>Time Saving</h4>
+                    <p>With Epicure, you can save valuable time by pre-ordering your meals before you arrive at the restaurant. No more waiting in long queues or dealing with delays </p>
+                </div>
+                </div><!-- End Icon Box -->
+
+                <div class="col-xl-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-file-earmark-person"></i>
+                    <h4>Personalized Experience</h4>
+                    <p>Our platform enables you to customize your orders based on your preferences and dietary requirements.</p>
+                </div>
+                </div><!-- End Icon Box -->
+
+                <div class="col-xl-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-shield-fill-check"></i>
+                    <h4>Secure and Reliable</h4>
+                    <p>We prioritize the security of your personal information and ensure safe transactions through our robust payment system.</p>
+                </div>
+                </div><!-- End Icon Box -->
+
+            </div>
+            </div>
+
+        </div>
+
+        </div>
+    </section><!-- End Why Us Section -->
+{% endblock WhyEpicure %}

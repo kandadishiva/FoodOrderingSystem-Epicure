@@ -1,0 +1,105 @@
+{% extends 'base2.html' %}
+{% load static %}
+{%block title %}Add Food{%endblock title%}
+{% block navbar %}
+  <li><a href="#hero">Home</a></li>
+  <li><a href="#AddItem">Add Food</a></li>
+  <li><a href="#contact">Contact</a></li>
+{% endblock navbar %}
+{% block hero %}
+<div class="container">
+  {% for messages in messages%}
+    <div class="alert alert-{{messages.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{messages}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  <div class="row justify-content-between gy-5">
+    <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+    <h2 data-aos="fade-up">Add a<br>Food?</h2>
+    <p data-aos="fade-up" data-aos-delay="100">Click 'Add' to add the food item by providing proper details of food</p>
+    <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+      <a href="#AddItem" class="btn-book-a-table">Add</a>
+    </div>
+    </div>
+    <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+    <img src="{% static 'images/food.jpg' %}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300" style="width: 800px; height: 430px; border-radius: 8%;">
+    </div>
+</div>
+</div>
+{% endblock hero %}
+
+{% block formSection %}
+<section id="AddItem" class="hero d-flex align-items-center section-bg">
+  <div class="container">
+
+    <div class="row justify-content-between gy-5">
+      <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+      <h2 data-aos="fade-up">Provide the <br>Detailes</h2>
+      <p data-aos="fade-up" data-aos-delay="100">Provide required detailes to add the food<br>Note: Provide a good clarity image in jpg or png format</p>
+      
+      </div>
+      <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+          
+
+              <form style="width: 23rem;" action="/AddFood" method="post"  enctype="multipart/form-data" >{% csrf_token %}
+
+                  <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+                      <h2 data-aos="fade-up">Food Item</h2>
+                  </div>
+                  
+                  <div class="form-outline mb-4">
+                      <input type="text" id="name" class="form-control form-control-lg"  name="name" required/>
+                      <label class="form-label" for="name">Item Name</label>
+                    
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="Ftype">Veg/Non-Veg</label>
+                        <select id="Ftype" name="Ftype">
+                            <option>Select</option>
+                            <option>Veg</option>
+                            <option>Non-Veg</option>
+                        </select>
+                    </div>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="description" class="form-control form-control-lg" name="description" required/>
+                  <label class="form-label" for="description">Description</label>
+                </div>
+    
+                <div class="form-outline mb-4">
+                  <input type="text" id="price" class="form-control form-control-lg" name="price" required/>
+                  <label class="form-label" for="price">Price</label>
+                </div>
+                
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="FCategory">Food Category</label>
+                  <select id="FCategory" name="FCategory">
+                    <option>Select</option>
+                    <option>Snacks</option>
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                  </select>
+                </div>
+                
+
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="image">Provide a good clarity image(jpg or png only)</label>
+                  <input type="file" id="image"  name="image"  required/>
+                  
+                </div>
+                <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+                  <button class="btn-book-a-table" type="submit" style="border: none;">Add</button>
+                </div>
+    
+              </form>
+    
+            
+      </div>
+    </div>
+    
+  </div>
+</section><!-- End Registeration Section -->
+{% endblock formSection %}

@@ -1,0 +1,68 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %}
+Food Items
+{% endblock title %} 
+{% block navbar %}
+    <li><a href="#hero">Restaturant Details</a></li>
+    <li><a href="#menu">Food Items</a></li>
+    <li><a href="#contact">Contact</a></li>
+{% endblock navbar %}
+
+{% block AddFood %}
+
+<a href="/AddFood" class="btn-book-a-table">Add Food</a>
+{% endblock AddFood %}
+
+{% block hero %}
+<div class="container">
+    <div class="my-4" style="justify-content: center;align-items:center;">
+      <center><h2>Restaturant Food Items</h2>
+        <div >
+          <div class="card">
+          <a href="#"><img src='{% static RestaturantInfo.Image %}'  alt="" style="border-radius: 10%; height:200px; width:280px;" ></a>
+          <h4 id="namepr{{RestaturantInfo.RestaturantId}}"><b>{{RestaturantInfo.RestaturantName}}</b></h4>
+            <h5>
+                <b>Address : {{RestaturantInfo.address}}</b>
+            </h5>
+          </div>
+          
+        </div></center>
+
+    </div>
+</div>
+
+{% endblock hero %}
+
+{% block formSection%}
+<section id="menu" >
+<div class="container">
+    <div class="my-4" style="justify-content: center;align-items:center;">
+        <div class="row gy-5">
+            {% for item in items%}
+
+            <div class="col-lg-4 menu-item">
+                <div class="card">
+                    <a href="#"><img src='{% static item.Image %}'  alt="" style="border-radius: 10%; height:200px; width:280px;" ></a>
+                    <h4 id="namepr{{item.ItemId}}"><b>{{item.ItemName}}</b></h4>
+                    <h4>
+                        <b>Rs:{{item.Price}}</b>
+                    </h4>
+                    <span  class="divpr">
+                        <button  class="btn btn-danger cart btn-sm mt-0" style="background-color: #ce1212; color: white; border-radius: 10px;border:none;padding : 10px; width:150px">
+                        Edit <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+                    </span>
+                </div>
+            
+            </div>
+
+            {% endfor%}
+
+        </div>
+    </div>
+</div>
+</section>
+  
+
+{% endblock formSection%}

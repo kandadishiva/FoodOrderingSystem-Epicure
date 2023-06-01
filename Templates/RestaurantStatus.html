@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{%block title %}Home{%endblock title%}
+{% block content %}
+    <div class="row justify-content-between gy-5">
+        <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+          {% if status == "Applied" %}
+        <h2 data-aos="fade-up">verification is <br>On-Progress</h2>
+        <p data-aos="fade-up" data-aos-delay="100">"Welcome to Epicure! Thank you for adding your restaurant. Sit back and relax as we verify your details within 24 hours for an extraordinary dining experience."</p>
+        {% elif status == "Approved" %}
+        <h2 data-aos="fade-up">Restaurant is <br>Verifed</h2>
+        <p data-aos="fade-up" data-aos-delay="100">"Welcome to Epicure! Thank you for adding your restaurant. You have been verifed Click Add Food button to start your journey"</p>
+        <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+          <a href="/AddFood" class="btn-book-a-table">Add Food</a>
+      </div>
+        {% else %}
+        <h2 data-aos="fade-up">verification is <br>Rejected</h2>
+        <p data-aos="fade-up" data-aos-delay="100">"Welcome to Epicure! Thank you for adding your restaurant. Your details are not verified. Please provide correct documents"</p>
+        {% endif %}
+        
+        </div>
+        <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+        <img src="static/images/tick.png" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+        </div>
+  </div>
+{% endblock content %}

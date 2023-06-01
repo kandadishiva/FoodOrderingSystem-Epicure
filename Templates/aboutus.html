@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/Bubble.css' %}">
+
+</head>
+<body>
+    <nav>
+        
+<input type="checkbox" id="check">
+<label for="check" class="checkbtn">
+  <i class="fas fa-bars"></i>
+</label>
+  <label class="logo">Epicure</label>
+  
+  <ul>
+  <li><a href="{% url 'index' %}" >Home</a></li>
+  <li><a class="active" href="{% url 'aboutus' %}">About Us</a></li>
+  <li><a href="#">Contact Us</a></li>
+  <li>
+    <img src="{% static 'images/login.png' %}" alt="login" class="loginlogo">
+    <a class="login" href="#">Login/Register</a></li>
+  </ul>
+        
+    </nav>
+    
+    <div class="container">          
+        <div class="drop">
+            <div class="info">
+                    <img src="{% static 'images/Shiva 200.jpg' %}"  class="img1">
+                    <h2>Shiva Prasad Reddy</h2>
+                    <h3>Roll No : 2110080015</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
