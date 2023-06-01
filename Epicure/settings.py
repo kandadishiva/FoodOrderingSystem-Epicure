@@ -29,7 +29,7 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-*#)6_ldba-(@96@063bx#11b$5q%($zz8j%hj^=w6q35b0x))s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -63,7 +63,7 @@ ROOT_URLCONF = 'Epicure.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"],
+        'DIRS': ["Templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
